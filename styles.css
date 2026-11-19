@@ -434,3 +434,95 @@ output {
     background-color: #b00020;
     border-radius: 8px;
 }
+#historial {
+    background-color: var(--color-background);
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+}
+
+caption {
+    padding: var(--spacing-medium);
+    font-weight: 700;
+    color: var(--color-text-light);
+}
+
+th {
+    padding: var(--spacing-medium);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+td {
+    padding: var(--spacing-medium);
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr {
+    transition: all var(--transition-fast);
+}
+
+tbody tr:hover {
+    background-color: var(--color-background);
+}
+
+#reglas {
+    background-color: var(--color-white);
+}
+
+#reglas ul {
+    list-style: none;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-large);
+}
+
+#reglas li {
+    margin-bottom: var(--spacing-small);
+    padding: var(--spacing-medium);
+    background-color: var(--color-background);
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: var(--shadow-small);
+    transition: all var(--transition-fast);
+}
+
+#reglas li:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-medium);
+}
+
+details {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--spacing-medium);
+    background-color: var(--color-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+}
+
+summary {
+    font-size: var(--font-size-large);
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+summary:hover {
+    color: var(--color-primary-light);
+}
+
+details p {
+    margin-top: var(--spacing-medium);
+    color: var(--color-text-light);
+}
+
+details ul {
+    margin-top: var(--spacing-medium);
+}
