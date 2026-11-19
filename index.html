@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Juego académico de blackjack con fichas virtuales.">
+    <title>Blackjack — Mesa de juego</title>
+</head>
+
+<body>
+    <header>
+        <h1>Blackjack</h1>
+        <p>Acércate a 21 sin pasarte.</p>
+        <p>Proyecto académico con fichas virtuales sin valor monetario.</p>
+
+        <nav aria-label="Navegación principal">
+            <a href="#mesa">Jugar</a>
+            <a href="#reglas">Reglas</a>
+            <a href="#apis">APIs</a>
+            <a href="#equipo">Equipo</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Estructura HTML: los controles requieren JavaScript y backend. -->
+        <!-- La API key debe guardarse en el servidor, nunca en este archivo. -->
+
+        <section id="mesa" aria-labelledby="titulo-mesa">
+            <h2 id="titulo-mesa">Mesa de juego</h2>
+
+            <aside aria-labelledby="titulo-marcador">
+                <h3 id="titulo-marcador">Marcador</h3>
+
+                <dl>
+                    <dt>Saldo de fichas</dt>
+                    <dd><output id="saldo">1000</output></dd>
+
+                    <dt>Apuesta actual</dt>
+                    <dd><output id="apuesta-actual">0</output></dd>
+
+                    <dt>Cartas restantes</dt>
+                    <dd><output id="cartas-restantes">—</output></dd>
+
+                    <dt>Estado de la ronda</dt>
+                    <dd><output id="estado-ronda">Sin iniciar</output></dd>
+                </dl>
+            </aside>
+
+            <form id="formulario-apuesta">
+                <fieldset>
+                    <legend>Preparar la ronda</legend>
+
+                    <label for="cantidad-apuesta">Fichas que deseas apostar:</label>
+                    <input
+                        type="number"
+                        id="cantidad-apuesta"
+                        name="apuesta"
+                        min="10"
+                        max="1000"
+                        step="10"
+                        value="50"
+                        aria-describedby="ayuda-apuesta"
+                        required
+                    >
+
+                    <p id="ayuda-apuesta">
+                        Apuesta en múltiplos de 10, sin superar tu saldo.
+                    </p>
+
+                    <button id="boton-iniciar" type="button">
+                        Apostar y repartir
+                    </button>
+                </fieldset>
+            </form>
+
+            <section id="zona-crupier" aria-labelledby="titulo-crupier">
+                <h3 id="titulo-crupier">Crupier</h3>
+
+                <p>
+                    Puntuación visible:
+                    <output id="puntos-crupier">—</output>
+                </p>
+
+                <ul id="cartas-crupier" aria-label="Cartas del crupier">
+                    <li>Esperando el reparto.</li>
+                </ul>
+
+                <p>Una carta permanecerá oculta durante tu turno.</p>
+            </section>
+
+            <section id="zona-jugador" aria-labelledby="titulo-jugador">
+                <h3 id="titulo-jugador">Tu mano</h3>
+
+                <p>
+                    Puntuación:
+                    <output id="puntos-jugador">—</output>
+                </p>
+
+                <p>
+                    Tipo de mano:
+                    <output id="tipo-mano">—</output>
+                </p>
+
+                <ul id="cartas-jugador" aria-label="Tus cartas">
+                    <li>Esperando el reparto.</li>
+                </ul>
+
+                <fieldset>
+                    <legend>Acciones del jugador</legend>
+
+                    <button id="boton-pedir" type="button" disabled>
+                        Pedir carta
+                    </button>
+
+                    <button id="boton-plantarse" type="button" disabled>
+                        Plantarse
+                    </button>
+
+                    <button id="boton-doblar" type="button" disabled>
+                        Doblar apuesta
+                    </button>
+
+                    <button id="boton-dividir" type="button" disabled>
+                        Dividir pareja
+                    </button>
+                </fieldset>
+            </section>
+
+            <section id="asistente" aria-labelledby="titulo-asistente">
+                <h3 id="titulo-asistente">Asistente de estrategia</h3>
+
+                <button id="boton-sugerencia" type="button" disabled>
+                    Consultar jugada recomendada
+                </button>
+
+                <p id="sugerencia" role="status">
+                    Inicia una ronda para consultar una sugerencia.
+                </p>
+
+                <button id="boton-probabilidad" type="button" disabled>
+                    Consultar probabilidad del crupier
+                </button>
+
+                <p>
+                    Probabilidad aproximada de que el crupier supere 21:
+                    <output id="probabilidad-crupier">—</output>
+                </p>
+
+                <p>Las recomendaciones son educativas y no garantizan ganar.</p>
+            </section>
+
+            <section id="resultado" aria-labelledby="titulo-resultado">
+                <h3 id="titulo-resultado">Resultado de la ronda</h3>
+
+                <p id="mensaje-resultado" role="status" aria-live="polite">
+                    Prepara tu apuesta para comenzar.
+                </p>
+
+                <p id="mensaje-error" role="alert" hidden></p>
+
+                <button id="boton-nueva-ronda" type="button" disabled>
+                    Nueva ronda
+                </button>
+            </section>
+        </section>
+
+        <section id="historial" aria-labelledby="titulo-historial">
+            <h2 id="titulo-historial">Historial de la sesión</h2>
+
+            <table>
+                <caption>Resultados de las rondas finalizadas</caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">Ronda</th>
+                        <th scope="col">Apuesta</th>
+                        <th scope="col">Tu puntuación</th>
+                        <th scope="col">Crupier</th>
+                        <th scope="col">Resultado</th>
+                        <th scope="col">Saldo final</th>
+                    </tr>
+                </thead>
+
+                <tbody id="filas-historial">
+                    <tr>
+                        <td colspan="6">Todavía no hay rondas registradas.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="reglas" aria-labelledby="titulo-reglas">
+            <h2 id="titulo-reglas">Reglas propuestas</h2>
+
+            <ul>
+                <li>El objetivo es superar al crupier sin pasar de 21.</li>
+                <li>Las cartas del 2 al 10 conservan su valor.</li>
+                <li>La jota, la reina y el rey valen 10.</li>
+                <li>El as vale 1 u 11, según convenga a la mano.</li>
+                <li>Un as y una carta de valor 10 forman blackjack natural.</li>
+                <li>El crupier pide por debajo de 17 y se planta en todo 17.</li>
+                <li>Doblar exige dos cartas y saldo para duplicar la apuesta.</li>
+                <li>Al doblar, recibes una sola carta y termina tu turno.</li>
+                <li>Dividir una pareja crea dos manos con apuestas iguales.</li>
+                <li>Las acciones disponibles dependen del estado de la ronda.</li>
+            </ul>
+
+            <details>
+                <summary>Pagos en fichas virtuales</summary>
+                <p>La apuesta se descuenta al comenzar la ronda.</p>
+
+                <ul>
+                    <li>Victoria normal: se devuelve el doble de la apuesta.</li>
+                    <li>Blackjack natural ganador: se devuelve 2,5 veces la apuesta.</li>
+                    <li>Empate: se devuelve la apuesta.</li>
+                    <li>Derrota: no se devuelven fichas.</li>
+                </ul>
+
+                <p>Los importes devueltos incluyen la apuesta inicial.</p>
+            </details>
+        </section>
+
+        <section id="apis" aria-labelledby="titulo-apis">
+            <h2 id="titulo-apis">APIs previstas para el proyecto</h2>
+
+            <article>
+                <h3>Deck of Cards API</h3>
+                <p>Proporcionará la baraja y las imágenes de las cartas.</p>
+
+                <ul>
+                    <li><code>GET /v1/deck</code>: crear el mazo.</li>
+                    <li><code>GET /v1/draw</code>: extraer cartas.</li>
+                    <li><code>GET /v1/shuffle</code>: barajar el mazo.</li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>Blackjack Strategy API</h3>
+                <p>Permitirá analizar las manos y consultar recomendaciones.</p>
+
+                <ul>
+                    <li><code>GET /v1/hand-value</code>: calcular la mano.</li>
+                    <li><code>GET /v1/strategy</code>: consultar una jugada.</li>
+                    <li><code>GET /v1/dealer-odds</code>: consultar probabilidades.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section id="equipo" aria-labelledby="titulo-equipo">
+            <h2 id="titulo-equipo">Integrantes</h2>
+
+            <ul>
+                <li>Mateo Andres Torrez Viricochea</li>
+                <li>Pedro Cesar Mamani Colque</li>
+                <li>Adrian Alberto Tenorio Quispe</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Blackjack — Proyecto académico de desarrollo web.</p>
+    </footer>
+</body>
+</html>
