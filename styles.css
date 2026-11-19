@@ -96,3 +96,117 @@ nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
     color: var(--color-secondary);
 }
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main > section {
+    padding: var(--spacing-xxl) var(--spacing-xl);
+}
+
+main h2 {
+    font-size: var(--font-size-xl);
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+main h3 {
+    font-size: var(--font-size-large);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-medium);
+}
+
+#mesa {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-large);
+    background-color: var(--color-background);
+    animation: fadeIn 1s ease-out;
+}
+
+#mesa h2 {
+    margin-bottom: 0;
+}
+
+#mesa > form,
+#mesa > aside,
+#asistente,
+#resultado {
+    padding: var(--spacing-large);
+    background-color: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-medium);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: var(--spacing-medium);
+}
+
+legend {
+    font-weight: 700;
+    color: var(--color-primary);
+    padding: 0 var(--spacing-small);
+}
+
+label {
+    font-weight: 700;
+}
+
+input {
+    padding: var(--spacing-medium);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    transition: border-color var(--transition-fast);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
+}
+
+#ayuda-apuesta {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-medium);
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+button:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    transform: scale(1.02);
+    box-shadow: var(--shadow-medium);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: none;
+    box-shadow: none;
+}
