@@ -42,3 +42,57 @@ body {
     color: var(--color-text);
     background-color: var(--color-background);
 }
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-small);
+    padding: var(--spacing-xl);
+    background: linear-gradient(
+        135deg,
+        var(--color-primary),
+        var(--color-primary-light)
+    );
+    color: var(--color-white);
+    box-shadow: var(--shadow-small);
+}
+
+header h1 {
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+    color: var(--color-secondary);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+header p {
+    font-size: var(--font-size-large);
+    opacity: 0.9;
+    animation: slideIn 1.8s ease-out;
+}
+
+header p:last-of-type {
+    font-size: 0.9rem;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-large);
+    margin-top: var(--spacing-medium);
+}
+
+nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    padding: var(--spacing-small) var(--spacing-medium);
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-secondary);
+}
